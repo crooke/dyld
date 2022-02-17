@@ -32,7 +32,7 @@ ifeq "$(OS_NAME)" "iPhoneOS"
 	INSTALL_NAME_TOOL = $(shell xcrun -sdk iphoneos.internal -find install_name_tool)
 else
   ifeq "$(OSX_SDK_ROOT)" ""
-    OSX_SDK_ROOT		= $(shell xcodebuild -version -sdk macosx.internal Path)
+    OSX_SDK_ROOT		= $(shell xcodebuild -version -sdk macosx Path)
   endif
 	CC			= $(shell xcrun -find cc)  -arch ${ARCH} -mmacosx-version-min=$(OS_VERSION) -isysroot $(OSX_SDK_ROOT)
 	CXX			= $(shell xcrun -find c++) -arch ${ARCH} -mmacosx-version-min=$(OS_VERSION) -isysroot $(OSX_SDK_ROOT)

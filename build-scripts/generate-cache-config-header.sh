@@ -4,7 +4,7 @@
 
 if [ -z "${ARM_SDK}" ]; then
     # if iOS SDK not available, use MacOSX SDK
-    ARM_SDK=`xcrun -sdk macosx.internal --show-sdk-path`
+    ARM_SDK=`xcrun -sdk macosx --show-sdk-path`
 fi
 
 SHARED_REGION_FILE="${ARM_SDK}/usr/include/mach/shared_region.h"

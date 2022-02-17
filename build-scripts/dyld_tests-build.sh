@@ -11,7 +11,7 @@ OBJROOT_RUN_STATIC="${TARGET_TEMP_DIR}/Objects_Run_Static"
 
 SYMROOT=${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/dyld_tests
 OBJROOT=${PROJECT_TEMP_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}
-SDKROOT=${SDKROOT:-$(xcrun -sdk macosx.internal --show-sdk-path)}
+SDKROOT=${SDKROOT:-$(xcrun -sdk macosx --show-sdk-path)}
 DEPLOYMENT_TARGET_CLANG_FLAG_NAME=${DEPLOYMENT_TARGET_CLANG_FLAG_NAME:-"mmacosx-version-min"}
 DERIVED_FILES_DIR=${DERIVED_FILES_DIR}
 LDFLAGS="-L$BUILT_PRODUCTS_DIR"
@@ -73,7 +73,7 @@ echo "LDFLAGS = $LDFLAGS" >> $TMPFILE
 
 xcodebuild install -target run-static SDKROOT="${SDKROOT}" MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} OBJROOT="${OBJROOT_RUN_STATIC}" SRCROOT="${SRCROOT}" DSTROOT="${DSTROOT}" SYMROOT="${SYMROOT}" RC_ProjectSourceVersion="${RC_ProjectSourceVersion}" DISABLE_SDK_METADATA_PARSING=YES
 
-xcodebuild install -target dyld_app_cache_util -sdk macosx.internal -configuration ${CONFIGURATION} MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} OBJROOT="${OBJROOT_DYLD_APP_CACHE_UTIL}" SRCROOT="${SRCROOT}" DSTROOT="${BUILT_PRODUCTS_DIR}" SYMROOT="${SYMROOT}" RC_ProjectSourceVersion="${RC_ProjectSourceVersion}" INSTALL_PATH="/host_tools" RC_ARCHS="${NATIVE_ARCH_ACTUAL}" DISABLE_SDK_METADATA_PARSING=YES
+xcodebuild install -target dyld_app_cache_util -sdk macosx -configuration ${CONFIGURATION} MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} OBJROOT="${OBJROOT_DYLD_APP_CACHE_UTIL}" SRCROOT="${SRCROOT}" DSTROOT="${BUILT_PRODUCTS_DIR}" SYMROOT="${SYMROOT}" RC_ProjectSourceVersion="${RC_ProjectSourceVersion}" INSTALL_PATH="/host_tools" RC_ARCHS="${NATIVE_ARCH_ACTUAL}" DISABLE_SDK_METADATA_PARSING=YES
 
 ${SRCROOT}/testing/build_ninja.py ${DERIVED_FILES_DIR}/config.ninja || exit_if_error $? "Generating build.ninja failed"
 ${NINJA} -C ${DERIVED_FILES_DIR} ${BUILD_TARGET} || exit_if_error $? "Ninja build failed"

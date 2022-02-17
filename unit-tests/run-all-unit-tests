@@ -7,7 +7,7 @@ cd `echo "$0" | sed 's/run-all-unit-tests/test-cases/'`
 CRSTATE=`defaults read com.apple.CrashReporter DialogType`
 defaults write com.apple.CrashReporter DialogType basic
 
-SDK=`xcodebuild -version -sdk macosx.internal Path`
+SDK=`xcodebuild -version -sdk macosx Path`
 
 # run test targeting different OS versions
 for OSVERSION in 10.9 10.8 10.7 10.6 10.5 10.4
