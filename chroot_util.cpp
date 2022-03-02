@@ -120,18 +120,17 @@ void add_symlinks_to_dylib(const std::string path) {
     std::string versionLinkTarget =  version;;
     alreadyMatched.insert(prefixPath);
     if (!std::filesystem::exists(versionLinkPath)) {
-        printf("Creating symlink %s\n", path.c_str());
+        // printf("Creating symlink %s\n", path.c_str());
         std::filesystem::create_symlink(version, versionLinkPath);
     }
     if (!std::filesystem::exists(mainLinkPath)) {
-        printf("Creating symlink %s\n", path.c_str());
+        // printf("Creating symlink %s\n", path.c_str());
         std::filesystem::create_symlink(mainLinkTarget, mainLinkPath);
     }
 }
 
 void add_symlink(const std::string& target, const std::string& path) {
     if (!std::filesystem::exists(path)) {
-        printf("Creating symlink 134\n");
         std::filesystem::create_symlink(target, path);
     }
 }
@@ -162,20 +161,20 @@ void buildChroot(const std::string& chroot, const std::string& fallback, const s
             scannedFiles.insert(filePath);
             auto candidates = scanForDependencies(filePath);
             for (const auto& candidate : candidates) {
-                printf("Considering candidate: %s\n", candidate.c_str());
+                // printf("Considering candidate: %s\n", candidate.c_str());
                 if (std::filesystem::exists(chroot + candidate)) {
-                    printf("Candidate %s already exists. Skipping.\n", candidate.c_str());
+                    // printf("Candidate %s already exists. Skipping.\n", candidate.c_str());
                     continue;
                 }
                 if (!std::filesystem::exists(fallback + candidate)) {
-                    printf("Candidate %s does not exist in fallback. Skipping.\n", candidate.c_str());
+                    printf("Warning: Candidate %s does not exist in fallback. Skipping.\n", candidate.c_str());
                     continue;
                 }
                 std::filesystem::create_directories(std::filesystem::path(chroot + candidate).parent_path());
-                printf("Copying candidate %s from fallback to chroot.\n", candidate.c_str());
+                printf("Copying %s from fallback to chroot.\n", candidate.c_str());
                 std::filesystem::copy(fallback + candidate, chroot + candidate);
                 add_symlinks_to_dylib(chroot + candidate);
-                printf("Added symlink %s\n", candidate.c_str());
+                // printf("Added symlink %s\n", candidate.c_str());
                 foundNewEntries = true;
             }
         }
