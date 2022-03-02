@@ -180,8 +180,7 @@ void buildChroot(const std::string& chroot, const std::string& fallback, const s
             }
         }
     }
-    add_symlink("libSystem.B.dylib", chroot + "/usr/lib/libSystem.dylib");
-    add_symlink("libSystem.dylib", chroot + "/usr/lib/libc.dylib");
+    // TODO: copy /usr/lib/dyld into chroot
 }
 
 int main(int argc, const char * argv[]) {
